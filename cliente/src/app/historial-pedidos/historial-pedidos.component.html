@@ -1,0 +1,60 @@
+<div class="historial-container">
+  <h2>Mi Historial de Pedidos</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Cargando historial...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && pedidos.length === 0" class="no-pedidos">
+    <p>No tienes pedidos realizados.</p>
+  </div>
+
+  <div *ngIf="!loading && !error && pedidos.length > 0" class="pedidos-list">
+    <div *ngFor="let pedido of pedidos" class="pedido-card">
+      <div class="pedido-header">
+        <div class="pedido-info">
+          <span class="pedido-id">Pedido #{{ pedido.id }}</span>
+          <span class="fecha">{{ pedido.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      </div>
+
+      <div class="detalles-envio">
+        <h3>Detalles de envío</h3>
+        <p><strong>Nombre:</strong> {{ pedido.nombreCompleto }}</p>
+        <p><strong>Email:</strong> {{ pedido.email }}</p>
+        <p><strong>País:</strong> {{ pedido.direccion }}</p>
+        <p><strong>Dirección:</strong> {{ pedido.ciudad }}, {{ pedido.provincia }} {{ pedido.codigoPostal }}</p>
+      </div>
+
+      <div class="pedido-items">
+        <h3>Productos</h3>
+        <div *ngFor="let item of pedido.items" class="item">
+          <div class="item-info">
+            <span class="item-nombre">{{ item.nombre }}</span>
+            <span class="item-cantidad">x{{ item.cantidad }}</span>
+          </div>
+          <div class="item-precios">
+            <span *ngIf="item.descuento > 0" class="precio-original">{{ item.precio | currency:'EUR' }}</span>
+            <span class="precio-final">{{ item.precio_final | currency:'EUR' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pedido-footer">
+        <div *ngIf="pedido.descuento > 0" class="descuento">
+          Descuento aplicado: {{ pedido.descuento | currency:'EUR' }}
+        </div>
+        <div class="subtotal" *ngIf="pedido.descuento > 0">
+          Subtotal: {{ pedido.total + pedido.descuento | currency:'EUR' }}
+        </div>
+        <div class="total">
+          Total: {{ pedido.total | currency:'EUR' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

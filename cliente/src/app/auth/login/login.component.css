@@ -1,0 +1,191 @@
+/* Container */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+}
+
+/* Login Box */
+.login-box {
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 3.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 12px 40px rgba(0, 243, 255, 0.15);
+  border: 1px solid rgba(0, 243, 255, 0.15);
+  animation: formFade 0.5s ease-out;
+}
+
+/* Title */
+.login-title {
+  color: var(--light);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: 3px;
+  position: relative;
+}
+
+.login-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 2.5rem;
+}
+
+.input-group {
+  position: relative;
+}
+
+/* Icons */
+.input-group i {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.4rem;
+  transition: all 0.3s;
+}
+
+/* Input Fields */
+.input-group input {
+  width: 100%;
+  padding: 1.3rem 1.5rem 1.3rem 3.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  color: var(--light);
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.25);
+}
+
+/* Labels */
+.input-group label {
+  position: absolute;
+  left: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition: all 0.3s;
+  font-size: 1.1rem;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  transform: translateY(-4.2rem);
+  font-size: 0.9rem;
+  color: var(--primary);
+  left: 0.5rem;
+  background: rgba(15, 15, 15, 0.95);
+  padding: 0.2rem 0.8rem;
+}
+
+/* Login Button */
+.login-btn {
+  width: 100%;
+  padding: 1.3rem;
+  background: var(--gradient);
+  border: none;
+  border-radius: 12px;
+  color: var(--dark);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 3rem;
+}
+
+.login-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 243, 255, 0.45);
+}
+
+.login-btn i {
+  font-size: 1.4rem;
+}
+
+/* Footer */
+.form-footer {
+  margin-top: 2.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.1rem;
+}
+
+.form-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.form-footer a:hover {
+  text-shadow: 0 0 10px var(--primary);
+}
+
+/* Animations */
+@keyframes formFade {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .login-box {
+      padding: 2.5rem;
+      margin: 1rem;
+  }
+  
+  .login-title {
+      font-size: 2.2rem;
+  }
+
+  .input-group input {
+      padding: 1.2rem 1.2rem 1.2rem 3.2rem;
+  }
+
+  .login-btn {
+      padding: 1.2rem;
+  }
+}

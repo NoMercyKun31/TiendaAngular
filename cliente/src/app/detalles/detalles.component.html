@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Videojuego</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./detalles.component.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-details">
+            <div class="game-image-section">
+                <div class="game-image-container">
+                    <img [src]="'http://localhost/Angular/tiendaAngular/server/imagenes/' + videojuego.id + '.jpg'"
+                         class="game-image"
+                         [alt]="videojuego.nombre">
+                    <div class="image-overlay"></div>
+                    <span *ngIf="videojuego.descuento > 0" class="discount-badge">
+                        <i class="fas fa-tag"></i> -{{ videojuego.descuento }}%
+                    </span>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="game-header">
+                    <h1 class="game-title">{{ videojuego.nombre }}</h1>
+                    <div class="game-meta">
+                        <span class="meta-item">
+                            <i class="fas fa-gamepad"></i>
+                            <span>{{ videojuego.categoria }}</span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-building"></i>
+                            <span>{{ videojuego.compania }}</span>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>{{ videojuego.anyolanzamiento }}</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="price-section">
+                    <div class="price-container">
+                        <span class="price" [ngClass]="{'discounted': videojuego.en_descuento}">
+                            {{ videojuego.descuento > 0 ? (videojuego.precio * (1 - videojuego.descuento / 100)).toFixed(2) : videojuego.precio }}€
+                        </span>
+                        <span *ngIf="videojuego.descuento > 0" class="original-price">
+                            {{ videojuego.precio }}€
+                        </span>
+                    </div>
+                    <div class="stock-status" [ngClass]="{'low-stock': videojuego.stock < 5}">
+                        <i class="fas" [ngClass]="{'fa-check-circle': videojuego.stock > 5, 'fa-exclamation-circle': videojuego.stock <= 5}"></i>
+                        {{ videojuego.stock > 0 ? 'En Stock' : 'Agotado' }}
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-cart" (click)="agregarAlCarrito()" [disabled]="videojuego.stock === 0">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Añadir al carrito</span>
+                    </button>
+                    <button class="btn btn-favorite" (click)="toggleFavorito(videojuego.id)">
+                        <i class="fas" [class.fa-heart]="esFavorito(videojuego.id)" [class.fa-heart-broken]="!esFavorito(videojuego.id)"></i>
+                    </button>
+                </div>
+
+                <div class="game-details-grid">
+                    <div class="detail-item">
+                        <i class="fas fa-box"></i>
+                        <div class="detail-content">
+                            <span class="detail-label">Stock</span>
+                            <span class="detail-value">{{ videojuego.stock }} unidades</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-hashtag"></i>
+                        <div class="detail-content">
+                            <span class="detail-label">ID Videojuego</span>
+                            <span class="detail-value">{{ videojuego.id }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="related-games">
+            <div class="section-header">
+                <h2>Juegos relacionados</h2>
+                <button class="btn btn-ver-mas" (click)="verMasJuegos()">
+                    <span>Ver más</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="related-games-grid">
+                <div *ngFor="let juego of juegosRelacionados" class="related-game-card">
+                    <div class="card-image-container">
+                        <img [src]="'http://localhost/Angular/tiendaAngular/server/imagenes/' + juego.id + '.jpg'"
+                             [alt]="juego.nombre"
+                             class="related-game-image">
+                        <div class="card-overlay">
+                            <button class="btn btn-ver-detalles" (click)="verDetalles(juego)">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Ver detalles</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>{{ juego.nombre }}</h3>
+                        <p class="card-price">{{ juego.precio }}€</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

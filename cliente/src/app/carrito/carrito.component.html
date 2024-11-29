@@ -1,0 +1,105 @@
+<main class="cart-page">
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1><i class="fas fa-shopping-cart"></i>Tu Carrito</h1>
+            <span class="cart-count">{{carritoItems.length}} Videojuegos</span>
+        </div>
+
+        <div class="cart-content">
+            <div class="cart-items">
+                <div class="cart-item" *ngFor="let item of carritoItems">
+                    <img [src]="'http://localhost/Angular/tiendaAngular/server/rest/imagenes/' + item.videojuego?.id + '.jpg'" 
+                         [alt]="item.videojuego?.nombre" 
+                         class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h3>{{item.videojuego?.nombre}}</h3>
+                        <div class="item-meta">
+                            <span class="platform"><i class="fas fa-building"></i> {{item.videojuego?.compania}}</span>
+                        </div>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn decrease" 
+                                (click)="actualizarCantidad(item, -1)"
+                                [disabled]="item.cantidad <= 1">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" 
+                               [value]="item.cantidad" 
+                               class="quantity-input" 
+                               readonly>
+                        <button class="quantity-btn increase" 
+                                (click)="actualizarCantidad(item, 1)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="cart-item-price">
+                        <div class="price-info">
+                            <ng-container *ngIf="item.videojuego && item.videojuego.en_descuento && item.videojuego.descuento > 0; else normalPrice">                                <span class="current-price">
+                                    {{ (item.videojuego?.precio! * (1 - (item.videojuego?.descuento! / 100))) | currency:'EUR':'symbol':'1.2-2' }}
+                                </span>
+                                <span class="original-price">
+                                    {{item.videojuego?.precio | currency:'EUR':'symbol':'1.2-2'}}
+                                </span>
+                                <span class="discount-tag">
+                                    -{{item.videojuego?.descuento}}%
+                                </span>
+                            </ng-container>
+                            <ng-template #normalPrice>
+                                <span class="current-price">
+                                    {{item.videojuego?.precio | currency:'EUR':'symbol':'1.2-2'}}
+                                </span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="btn-remove" 
+                                (click)="eliminarItem(item.videojuego_id)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn-wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h2>Resumen del pedido</h2>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>{{calcularSubtotal() | currency:'EUR':'symbol':'1.2-2'}}</span>
+                    </div>
+                    <div class="summary-item" *ngIf="calcularDescuentoTotal() > 0">
+                        <span>Descuentos</span>
+                        <span class="discount-value">
+                            -{{calcularDescuentoTotal() | currency:'EUR':'symbol':'1.2-2'}}
+                        </span>
+                    </div>
+                    <div class="summary-item">
+                        <span>IVA (21%)</span>
+                        <span>{{calcularIVA() | currency:'EUR':'symbol':'1.2-2'}}</span>
+                    </div>
+                </div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span>{{calcularTotal() | currency:'EUR':'symbol':'1.2-2'}}</span>
+                </div>
+                <button class="btn-checkout" (click)="procesarCompra()">
+                    <i class="fas fa-lock"></i>
+                    Pago Seguro
+                </button>
+                <button class="btn-clear" (click)="vaciarCarrito()">
+                    <i class="fas fa-trash-alt"></i>
+                    Vaciar Carrito
+                </button>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

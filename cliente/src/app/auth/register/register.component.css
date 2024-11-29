@@ -1,0 +1,149 @@
+
+.registro-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+}
+
+.registro-box {
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 3rem;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 32px rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.1);
+  animation: formFade 0.5s ease-out;
+}
+
+.registro-title {
+  color: var(--light);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.registro-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-top: 1rem;
+  height: 4.5rem; /* Añadimos altura fija para mejor control */
+}
+
+.form-group i {
+  position: absolute;
+  left: 15px;
+  /* Ajustamos la posición del icono para que esté alineado con el input */
+  top: calc(50% + 0.5rem);
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.2rem;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.form-group input:focus + i {
+  color: var(--primary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: var(--light);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.form-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+.form-group label {
+  position: absolute;
+  left: 3rem;
+  bottom: 1rem;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.form-group input:focus ~ label,
+.form-group input:not(:placeholder-shown) ~ label {
+  transform: translateY(-3.2rem);
+  font-size: 0.8rem;
+  color: var(--primary);
+  left: 0.5rem;
+  background: rgba(15, 15, 15, 0.95);
+}
+
+.registro-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gradient);
+  border: none;
+  border-radius: 8px;
+  color: var(--dark);
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.registro-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 243, 255, 0.4);
+}
+
+.registro-btn i {
+  font-size: 1.2rem;
+}
+
+@keyframes formFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .registro-box {
+    padding: 2rem;
+  }
+
+  .registro-title {
+    font-size: 1.8rem;
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "/server": {
+      "target": "http://localhost/Angular/tiendaAngular",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  

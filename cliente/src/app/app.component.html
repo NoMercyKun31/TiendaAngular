@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="./app.component.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-content">
+      <div class="logo-section">
+        <div class="logo">
+          <a routerLink="/listado" style="text-decoration: none; color: #ffffff;">
+            <i class="fas fa-gamepad"></i>PIXEL<span>PERFECT</span>
+          </a>
+        </div>
+      </div>
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" placeholder="Buscar Juegos..." [(ngModel)]="searchTerm" (keyup)="onSearchKeyUp($event)">
+          <button class="search-btn" (click)="onSearch()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <!-- Siempre visible -->
+         <li>
+          <a routerLink="/pedido" title="Pedidos">
+            <i class="fas fa-box-open"></i>
+            <span class="sr-only">Pedidos</span>
+          </a>
+         </li>
+        <li>
+          <a routerLink="/favoritos" title="Favoritos">
+            <i class="fas fa-heart"></i>
+            <span class="sr-only">Favoritos</span>
+          </a>
+        </li>
+  
+        <!-- Menú desplegable de perfil -->
+        <li class="profile-dropdown">
+          <a href="javascript:void(0)" title="Perfil" (click)="toggleDropdown()">
+            <i class="fas fa-user"></i>
+            <span class="sr-only">Perfil</span>
+          </a>
+          <!-- Menú desplegable -->
+          <div class="dropdown-menu" *ngIf="showDropdown" (clickOutside)="closeDropdown()">
+            <!-- Opciones cuando NO está autenticado -->
+            <ng-container *ngIf="!isAuthenticated">
+              <a routerLink="/login" class="dropdown-item" (click)="closeDropdown()">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Iniciar Sesión</span>
+              </a>
+              <a routerLink="/register" class="dropdown-item" (click)="closeDropdown()">
+                <i class="fas fa-user-plus"></i>
+                <span>Registrar</span>
+              </a>
+            </ng-container>
+            <!-- Opciones cuando ESTÁ autenticado -->
+            <ng-container *ngIf="isAuthenticated">
+              <a routerLink="/profile" class="dropdown-item" (click)="closeDropdown()">
+                <i class="fas fa-user"></i>
+                <span>Mi Cuenta</span>
+              </a>
+              <a (click)="logout()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+              </a>
+            </ng-container>
+          </div>
+        </li>
+  
+        <!-- Siempre visible -->
+        <li>
+          <a routerLink="/carrito" class="cart-icon" title="Carrito">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" *ngIf="totalItems > 0">{{totalItems}}</span>
+            <span class="sr-only">Carrito</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <header id="home" *ngIf="mostrarHeader">
+    <div class="hero">
+      <h1><i class="fas fa-robot"></i> Bienvenido al Futuro</h1>
+      <p>Descubre lo &uacute;ltimo y lo mejor en entretenimiento de juegos</p>
+      <div class="hero-buttons">
+        <button class="primary-btn">
+          <a routerLink="/listado"><i class="fas fa-shopping-bag"></i> Comprar ahora</a>
+        </button>
+        <button class="secondary-btn">
+          <i class="fas fa-play"></i> Ver trailer
+        </button>
+      </div>
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+  <footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section brand">
+                <div class="logo"><i class="fas fa-gamepad"></i>PIXEL<span>PERFECT</span></div>
+                <p>Tu destino definitivo para la excelencia en juegos. Únete a nuestra comunidad de jugadores y mejora tu experiencia de juego.</p>
+                <div class="social-links">
+                    <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitch"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Sobre Nosotros</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Nuestro Equipo</a></li>
+                    <li><a href="http://localhost/Angular/tiendaAngular/server  /admin/"><i class="fas fa-angle-right"></i>Acceso Administración</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-info-circle"></i> Ayuda & Soporte</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Preguntas Frecuentes</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Centro de Soporte</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Términos de Servicio</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-section newsletter">
+                <h3><i class="fas fa-envelope"></i> Boletín</h3>
+                <p>¡Suscríbete para recibir ofertas especiales, regalos y actualizaciones!</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Introduce tu correo">
+                    <button type="submit" class="subscribe-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-bitcoin"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Pixel Perfect. Todos los derechos reservados.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Términos</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

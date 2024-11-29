@@ -1,0 +1,30 @@
+:root {
+    --primary: #00f3ff;
+    --secondary: #ff00f7;
+    --dark: #0a0a0a;
+    --light: #ffffff;
+    --gradient: linear-gradient(45deg, var(--primary), var(--secondary));
+
+    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+main {
+    padding: 4rem 10%;
+}
+
+section {
+    margin-bottom: 4rem;
+}
+

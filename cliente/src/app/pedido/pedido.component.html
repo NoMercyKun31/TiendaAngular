@@ -1,0 +1,141 @@
+<main class="payment-page">
+    <div class="payment-container">
+        <h1 class="payment-header">
+            <i class="fas fa-lock"></i>Paga Segura
+        </h1>
+
+        <form class="payment-form" (ngSubmit)="finalizarPedido()" #pedidoForm="ngForm">
+            <div class="form-grid">
+                <div class="billing-section">
+                    <h2><i class="fas fa-map-marker-alt"></i>Dirección de Envios</h2>
+                    
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Nombre Completo
+                        </label>
+                        <input type="text" [(ngModel)]="pedido.nombreCompleto" name="nombreCompleto" placeholder="Introduzca su nombre" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-envelope"></i>
+                            Correo Electronico
+                        </label>
+                        <input type="email" [(ngModel)]="pedido.email" name="email" placeholder="Introduzca su correo" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-home"></i>
+                            Direccion
+                        </label>
+                        <input type="text" [(ngModel)]="pedido.direccion" name="direccion" placeholder="Introduzca su direccion" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-city"></i>
+                            Ciudad
+                        </label>
+                        <input type="text" [(ngModel)]="pedido.ciudad" name="ciudad" placeholder="Introduzca su ciudad" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-flag"></i>
+                                Provincia   
+                            </label>
+                            <input type="text" [(ngModel)]="pedido.provincia" name="provincia" placeholder="Introduzca su provincia" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-mail-bulk"></i>
+                                Codigo Postal
+                            </label>
+                            <input type="text" [(ngModel)]="pedido.codigoPostal" name="codigoPostal" placeholder="Introduzca su codigo postal" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <h2><i class="fas fa-credit-card"></i>Metodo de Pago</h2>
+                    
+                    <div class="cards-accepted">
+                        <span>Tarjetas Aceptadas</span>
+                        <div class="card-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-discover"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            Titular de la Tarjeta
+                        </label>
+                        <input type="text" [(ngModel)]="pedido.titularTarjeta" name="titularTarjeta" placeholder="Introduzca el titular de la tarjeta" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-credit-card"></i>
+                            Numero de Tarjeta
+                        </label>
+                        <input type="text" [(ngModel)]="pedido.numeroTarjeta" name="numeroTarjeta" placeholder="1234 5678 9012 3456" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-calendar"></i>
+                                Fecha de Expiracion
+                            </label>
+                            <div class="expiry-inputs">
+                                <input type="text" [(ngModel)]="pedido.fechaVencimiento" name="fechaVencimiento" placeholder="MM/YY" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>
+                                <i class="fas fa-lock"></i>
+                                CVV
+                            </label>
+                            <input type="text" [(ngModel)]="pedido.cvv" name="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h2><i class="fas fa-shopping-cart"></i>Resumen del Pedido</h2>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>€{{ subtotal.toFixed(2) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Descuento</span>
+                        <span class="discount">-€{{ descuento.toFixed(2) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>IVA (21%)</span>
+                        <span>€{{ iva.toFixed(2) }}</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>€{{ total.toFixed(2) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="!pedidoForm.valid" class="pay-button">
+                <i class="fas fa-lock"></i> Finalizar Pedido
+            </button>
+        </form>
+    </div>
+</main>

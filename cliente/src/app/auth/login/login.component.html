@@ -1,0 +1,45 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2 class="login-title">Iniciar Sesión</h2>
+    <form (ngSubmit)="login()" class="login-form">
+      <div class="form-group">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input 
+            id="username" 
+            [(ngModel)]="credentials.username" 
+            name="username" 
+            type="text"
+            placeholder="Nombre de Usuario"
+            required 
+          />
+          <label for="username">Nombre de Usuario</label>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input 
+            id="password" 
+            [(ngModel)]="credentials.password" 
+            name="password" 
+            type="password" 
+            placeholder="Contraseña"
+            required 
+          />
+          <label for="password">Contraseña</label>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">
+        <span>Iniciar Sesión</span>
+        <i class="fas fa-sign-in-alt"></i>
+      </button>
+
+      <div class="form-footer">
+        <p>¿No tienes cuenta? <a (click)="goToRegister()">Regístrate</a></p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Videojuegos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./listado.component.css">
+    
+</head>
+<body>
+    <main>
+        
+        <section id="categories" class="categories mb-6">
+            <h2><i class="fas fa-folder"></i>Explorar Categorías</h2>
+            <div class="category-grid">
+              <div class="category-card" (click)="onCategorySelect('')" [class.active]="selectedCategory === ''">
+                <i class="fas fa-th"></i>
+                <h3>Todas</h3>
+                <span class="game-count">{{ videojuegos.length }} Juegos</span>
+              </div>
+              <div *ngFor="let category of categories" class="category-card" (click)="onCategorySelect(category)" [class.active]="selectedCategory === category">
+                <i [class]="getCategoryIcon(category)"></i>
+                <h3>{{ category }}</h3>
+                <span class="game-count">{{ getCategoryCount(category) }} Juegos</span>
+              </div>
+            </div>
+          </section>
+        
+          <section id="games" class="games-grid">
+            <h2><i class="fas fa-fire"></i>Listado de Juegos</h2>
+            <div class="game-cards">
+              <div *ngFor="let videojuego of pagedVideojuegos" class="game-card">                
+                <div class="game-img">
+                  <img [src]= "'http://localhost/Angular/tiendaAngular/server/imagenes/' + videojuego.id + '.jpg'" [alt]="videojuego.nombre">
+                  <span *ngIf="videojuego.descuento > 0" class="discount-badge">-{{videojuego.descuento}}%</span>
+                </div>
+                <div class="game-info">
+                  <h3>{{ videojuego.nombre }}</h3>
+                  <div class="game-meta">
+                    <span><i class="fas fa-gamepad"></i> {{ videojuego.categoria }}</span>
+                    <span [class]="getStockClass(videojuego.stock)">
+                      <i class="fas fa-box"></i> {{ getStockText(videojuego.stock) }}
+                    </span>
+                  </div>
+                  <div class="price-container">
+                    <ng-container *ngIf="videojuego.descuento > 0; else noDiscount">
+                      <span class="original-price">{{ videojuego.precio | currency:'EUR':'symbol':'1.2-2' }}</span>
+                      <span class="discounted-price">{{ calculateDiscountedPrice(videojuego) | currency:'EUR':'symbol':'1.2-2' }}</span>
+                    </ng-container>
+                    <ng-template #noDiscount>
+                      <span class="regular-price">{{ videojuego.precio | currency:'EUR':'symbol':'1.2-2' }}</span>
+                    </ng-template>
+                  </div>
+                  <button (click)="verDetalles(videojuego)">
+                    <i class="fas fa-info-circle"></i> Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="pagination">
+              <button class="page-btn prev" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+                  <i class="fas fa-chevron-left"></i>
+              </button>
+              <div class="page-numbers">
+                  <ng-container *ngFor="let page of getPageNumbers()">
+                      <button *ngIf="page !== '...'" class="page-btn" [class.active]="page === currentPage" (click)="changePage(page)">
+                          {{ page }}
+                      </button>
+                      <span *ngIf="page === '...'" class="page-dots">...</span>
+                  </ng-container>
+              </div>
+              <button class="page-btn next" [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+                  <i class="fas fa-chevron-right"></i>
+              </button>
+          </div>
+          </section>
+    </main>
+    <script src="./listado.component.js"></script>
+</body>
+</html>
