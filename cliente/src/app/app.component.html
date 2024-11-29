@@ -95,6 +95,11 @@
       </div>
     </div>
   </header>
+  <div class="loader-container" [ngClass]="{'show': isLoading}">
+    <div class="loader">
+      <div class="justify-content-center jimu-primary-loading"></div>
+    </div>
+  </div>
   <router-outlet></router-outlet>
   <footer>
     <div class="footer-content">

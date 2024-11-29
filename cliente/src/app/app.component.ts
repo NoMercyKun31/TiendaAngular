@@ -1,6 +1,6 @@
 // app.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, NavigationCancel, NavigationError, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'cliente';
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showDropdown = false;
   searchTerm: string = '';
   totalItems: number = 0;
+  isLoading = false;
   private cartSubscription: Subscription;
 
   constructor(
@@ -32,7 +33,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     // Detecta el cambio de rutas
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      } else if (event instanceof NavigationEnd) {
         this.mostrarHeader = !event.url.includes('/detalles') 
         && !event.url.includes('/register') 
         && !event.url.includes('/login') 
@@ -41,7 +44,17 @@ export class AppComponent implements OnInit, OnDestroy {
         && !event.url.includes("/pedido")
         && !event.url.includes('/historial-pedidos')
         && !event.url.includes('/favoritos');
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
         scrollTo(0, 0);
+      } else if (
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 2500);
       }
     });
 
