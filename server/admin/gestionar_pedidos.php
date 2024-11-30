@@ -28,6 +28,7 @@ $pedidos = R::findAll('pedido', ' ORDER BY fecha ASC');
                 </div>
                 <div class="card-body">
                     <div class="row g-4">
+                        <!-- Información del Cliente -->
                         <div class="col-md-6">
                             <div class="p-3 border rounded bg-light">
                                 <h6 class="border-bottom pb-2 mb-3">
@@ -60,72 +61,71 @@ $pedidos = R::findAll('pedido', ' ORDER BY fecha ASC');
                                 </p>
                             </div>
                         </div>
+                        <!-- Detalles del Pedido -->
                         <div class="col-md-6">
                             <div class="p-3 border rounded bg-light">
                                 <h6 class="border-bottom pb-2 mb-3">
                                     <i class="fas fa-info-circle me-2"></i>
                                     Detalles del Pedido
                                 </h6>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="h5 mb-0">Total del Pedido:</span>
-                                    <span class="h4 mb-0 text-primary">$<?php echo number_format($pedido->total, 2); ?></span>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th class="text-end">Precio unitario</th>
+                                                <th class="text-center">Descuento</th>
+                                                <th class="text-end">Subtotal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $detalles_pedido = R::find('pedidovideojuego', 'pedido_id = ?', [$pedido->id]);
+                                            foreach ($detalles_pedido as $detalle):
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <i class="fas fa-gamepad me-2 text-primary"></i>
+                                                        <?php echo htmlspecialchars($detalle->nombre); ?>
+                                                    </td>
+                                                    <td class="text-center"><?php echo $detalle->cantidad; ?></td>
+                                                    <td class="text-end">$<?php echo number_format($detalle->precio, 2); ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($detalle->descuento > 0): ?>
+                                                            <span class="badge bg-success">
+                                                                <?php echo $detalle->descuento; ?>%
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="text-end">$<?php echo number_format($detalle->subtotal, 2); ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                        <tfoot class="table-light">
+                                            <tr>
+                                                <td colspan="4" class="text-end">
+                                                    <strong>Total del Pedido:</strong>
+                                                </td>
+                                                <td class="text-end">
+                                                    <strong class="text-primary">$<?php echo number_format($pedido->total, 2); ?></strong>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- Botón Eliminar -->
+                                <div class="mt-3 text-end">
+                                    <form action="eliminar_pedido.php" method="POST" style="display: inline;">
+                                        <input type="hidden" name="pedido_id" value="<?php echo $pedido->id; ?>">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este pedido?');">
+                                            <i class="fas fa-trash me-2"></i>Eliminar Pedido
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <h6 class="border-bottom pb-2 mb-3">
-                            <i class="fas fa-box-open me-2"></i>
-                            Productos del Pedido
-                        </h6>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th class="text-center">Cantidad</th>
-                                        <th class="text-end">Precio unitario</th>
-                                        <th class="text-center">Descuento</th>
-                                        <th class="text-end">Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $detalles_pedido = R::find('pedidovideojuego', 'pedido_id = ?', [$pedido->id]);
-                                    foreach ($detalles_pedido as $detalle):
-                                    ?>
-                                        <tr>
-                                            <td>
-                                                <i class="fas fa-gamepad me-2 text-primary"></i>
-                                                <?php echo htmlspecialchars($detalle->nombre); ?>
-                                            </td>
-                                            <td class="text-center"><?php echo $detalle->cantidad; ?></td>
-                                            <td class="text-end">$<?php echo number_format($detalle->precio, 2); ?></td>
-                                            <td class="text-center">
-                                                <?php if ($detalle->descuento > 0): ?>
-                                                    <span class="badge bg-success">
-                                                        <?php echo $detalle->descuento; ?>%
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span class="text-muted">-</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-end">$<?php echo number_format($detalle->subtotal, 2); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                                <tfoot class="table-light">
-                                    <tr>
-                                        <td colspan="4" class="text-end">
-                                            <strong>Total del Pedido:</strong>
-                                        </td>
-                                        <td class="text-end">
-                                            <strong class="text-primary">$<?php echo number_format($pedido->total, 2); ?></strong>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
                         </div>
                     </div>
                 </div>
