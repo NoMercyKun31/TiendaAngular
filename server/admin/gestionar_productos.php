@@ -73,14 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
         <!-- Modal de descuentos masivos -->
         <div class="modal fade" id="descuentosMasivosModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Aplicar Descuentos Masivos</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <form method="POST">
-                        <div class="modal-body">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aplicar Descuentos Masivos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                             <div class="mb-3">
                                 <label class="form-label">Seleccionar Descuento</label>
                                 <select name="descuento_masivo" class="form-select" required>
@@ -161,14 +160,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </div>
         <div class="modal fade" id="eliminacionMasivaModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Eliminación Masiva de Videojuegos</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST">
-                        <div class="modal-body">
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                             <div class="mb-3">
                                 <label class="form-label">Seleccionar Videojuegos para Eliminar</label>
                                 <?php foreach ($videojuegos as $videojuego): ?>
