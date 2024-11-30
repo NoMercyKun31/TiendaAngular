@@ -48,6 +48,24 @@
   height: 4.5rem; /* Añadimos altura fija para mejor control */
 }
 
+.error-message {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  position: absolute;
+  left: 0;
+  bottom: -20px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.registro-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .form-group i {
   position: absolute;
   left: 15px;
