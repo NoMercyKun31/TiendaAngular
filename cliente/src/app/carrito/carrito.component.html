@@ -8,7 +8,7 @@
         <div class="cart-content">
             <div class="cart-items">
                 <div class="cart-item" *ngFor="let item of carritoItems">
-                    <img [src]="'http://localhost/Angular/tiendaAngular/server/rest/imagenes/' + item.videojuego?.id + '.jpg'" 
+                    <img [src]="'http://localhost/Angular/tiendaAngular/server/imagenes/' + item.videojuego?.id + '.jpg'" 
                          [alt]="item.videojuego?.nombre" 
                          class="cart-item-image">
                     <div class="cart-item-details">
@@ -55,9 +55,6 @@
                         <button class="btn-remove" 
                                 (click)="eliminarItem(item.videojuego_id)">
                             <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="btn-wishlist">
-                            <i class="far fa-heart"></i>
                         </button>
                     </div>
                 </div>
