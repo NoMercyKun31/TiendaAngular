@@ -87,10 +87,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h2 class="mb-0">Editar Videojuego</h2>
                 </div>
                 <div class="card-body">
-                    <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $id; ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $id; ?>" method="post" enctype="multipart/form-data" id="editarVideojuegoForm" novalidate>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($videojuego->nombre); ?>" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($videojuego->nombre); ?>" required maxlength="100">
+                            <div class="invalid-feedback">El nombre es requerido y debe tener máximo 100 caracteres.</div>
                         </div>
                         <div class="mb-3">
                             <label for="categoria" class="form-label">Categoría</label>
@@ -101,25 +102,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-feedback">Seleccione una categoría.</div>
                         </div>
                         <div class="mb-3">
                             <label for="compania" class="form-label">Compañía</label>
-                            <input type="text" class="form-control" id="compania" name="compania" value="<?php echo htmlspecialchars($videojuego->compania); ?>" required>
+                            <input type="text" class="form-control" id="compania" name="compania" value="<?php echo htmlspecialchars($videojuego->compania); ?>" required maxlength="100">
+                            <div class="invalid-feedback">La compañía es requerida y debe tener máximo 100 caracteres.</div>
                         </div>
                         <div class="mb-3">
                             <label for="anyolanzamiento" class="form-label">Año de Lanzamiento</label>
-                            <input type="number" class="form-control" id="anyolanzamiento" name="anyolanzamiento" value="<?php echo htmlspecialchars($videojuego->anyolanzamiento); ?>" required>
+                            <input type="number" class="form-control" id="anyolanzamiento" name="anyolanzamiento" value="<?php echo htmlspecialchars($videojuego->anyolanzamiento); ?>" required min="1900" max="2099">
+                            <div class="invalid-feedback">Ingrese un año válido entre 1900 y 2099.</div>
                         </div>
                         <div class="mb-3">
                             <label for="precio" class="form-label">Precio</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="number" class="form-control" id="precio" name="precio" step="0.01" value="<?php echo htmlspecialchars($videojuego->precio); ?>" required>
+                                <input type="number" class="form-control" id="precio" name="precio" step="0.01" value="<?php echo htmlspecialchars($videojuego->precio); ?>" required min="0.01" max="9999.99">
                             </div>
+                            <div class="invalid-feedback">Ingrese un precio válido entre 0.01 y 9999.99.</div>
                         </div>
                         <div class="mb-3">
                             <label for="stock" class="form-label">Stock</label>
                             <input type="number" class="form-control" id="stock" name="stock" min="0" max="99" value="<?php echo htmlspecialchars($videojuego->stock); ?>" required>
+                            <div class="invalid-feedback">Ingrese un stock válido entre 0 y 99.</div>
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto actual</label> <br/>
@@ -137,6 +143,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('editarVideojuegoForm');
+
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+    }, false);
+
+    // Validación personalizada para campos de texto
+    const textInputs = ['nombre', 'compania'];
+    textInputs.forEach(function(inputId) {
+        const input = document.getElementById(inputId);
+        input.addEventListener('input', function() {
+            this.value = this.value.trim();
+            if (this.value.length > 100) {
+                this.value = this.value.slice(0, 100);
+            }
+            this.setCustomValidity(this.value ? '' : 'Este campo es requerido.');
+        });
+    });
+
+    // Validación para año de lanzamiento
+    const anyoInput = document.getElementById('anyolanzamiento');
+    anyoInput.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        if (isNaN(value) || value < 1900 || value > 2099) {
+            this.setCustomValidity('Ingrese un año válido entre 1900 y 2099.');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Validación para precio
+    const precioInput = document.getElementById('precio');
+    precioInput.addEventListener('input', function() {
+        const value = parseFloat(this.value);
+        if (isNaN(value) || value < 0.01 || value > 9999.99) {
+            this.setCustomValidity('Ingrese un precio válido entre 0.01 y 9999.99.');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Validación para stock
+    const stockInput = document.getElementById('stock');
+    stockInput.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        if (isNaN(value) || value < 0 || value > 99) {
+            this.setCustomValidity('Ingrese un stock válido entre 0 y 99.');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+});
+</script>
 
 <?php
 $content = ob_get_clean();
