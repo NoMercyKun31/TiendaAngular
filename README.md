@@ -4,7 +4,7 @@
 
 1. [Introducción](#introducción)
 2. [Características](#características)
-3. [Detalles a considerar](#instalación)
+3. [Detalles a considerar](#detalles)
 ---
 
 ## Introducción
