@@ -15,7 +15,7 @@ Este proyecto es una tienda de videojuegos retro desarrollada con **Angular** en
 
 ## Características
 
-- **Interfaz amigable**: Diseño Futurista y con muchos estilos.
+- **Interfaz amigable**: Diseño Futurista y con muchos estilos. Contiene paginación al listado de productos.
 - **Filtrado de productos**: Los usuarios pueden filtrar por categoría y realizar busquedas por nombre los productos que busca.
 - **Favoritos**: El usuario puede añadir a favoritos los productos que mas le ha gustado, y puedes posteriormente añadirlo a su Carrito.
 - **Carrito de compras**: Función para añadir videojuegos al carrito y proceder con la compra. Aunque debe primero iniciar sesión.
