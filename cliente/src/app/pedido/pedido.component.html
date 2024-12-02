@@ -4,7 +4,7 @@
             <i class="fas fa-lock"></i>Paga Segura
         </h1>
 
-        <form class="payment-form" (ngSubmit)="finalizarPedido()" #pedidoForm="ngForm">
+        <form class="payment-form" [formGroup]="pedidoForm" (ngSubmit)="finalizarPedido()">
             <div class="form-grid">
                 <div class="billing-section">
                     <h2><i class="fas fa-map-marker-alt"></i>Dirección de Envios</h2>
@@ -14,7 +14,11 @@
                             <i class="fas fa-user"></i>
                             Nombre Completo
                         </label>
-                        <input type="text" [(ngModel)]="pedido.nombreCompleto" name="nombreCompleto" placeholder="Introduzca su nombre" required>
+                        <input type="text" formControlName="nombreCompleto" placeholder="Introduzca su nombre">
+                        <div class="error-message" *ngIf="pedidoForm.get('nombreCompleto')?.touched && pedidoForm.get('nombreCompleto')?.errors">
+                            <span *ngIf="pedidoForm.get('nombreCompleto')?.errors?.['required']">El nombre es requerido</span>
+                            <span *ngIf="pedidoForm.get('nombreCompleto')?.errors?.['excessiveWhitespace']">Demasiados espacios en blanco</span>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -22,7 +26,11 @@
                             <i class="fas fa-envelope"></i>
                             Correo Electronico
                         </label>
-                        <input type="email" [(ngModel)]="pedido.email" name="email" placeholder="Introduzca su correo" required>
+                        <input type="email" formControlName="email" placeholder="Introduzca su correo">
+                        <div class="error-message" *ngIf="pedidoForm.get('email')?.touched && pedidoForm.get('email')?.errors">
+                            <span *ngIf="pedidoForm.get('email')?.errors?.['required']">El correo es requerido</span>
+                            <span *ngIf="pedidoForm.get('email')?.errors?.['email']">Correo electrónico inválido</span>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -30,7 +38,11 @@
                             <i class="fas fa-home"></i>
                             Direccion
                         </label>
-                        <input type="text" [(ngModel)]="pedido.direccion" name="direccion" placeholder="Introduzca su direccion" required>
+                        <input type="text" formControlName="direccion" placeholder="Introduzca su direccion">
+                        <div class="error-message" *ngIf="pedidoForm.get('direccion')?.touched && pedidoForm.get('direccion')?.errors">
+                            <span *ngIf="pedidoForm.get('direccion')?.errors?.['required']">La dirección es requerida</span>
+                            <span *ngIf="pedidoForm.get('direccion')?.errors?.['excessiveWhitespace']">Demasiados espacios en blanco</span>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -38,7 +50,11 @@
                             <i class="fas fa-city"></i>
                             Ciudad
                         </label>
-                        <input type="text" [(ngModel)]="pedido.ciudad" name="ciudad" placeholder="Introduzca su ciudad" required>
+                        <input type="text" formControlName="ciudad" placeholder="Introduzca su ciudad">
+                        <div class="error-message" *ngIf="pedidoForm.get('ciudad')?.touched && pedidoForm.get('ciudad')?.errors">
+                            <span *ngIf="pedidoForm.get('ciudad')?.errors?.['required']">La ciudad es requerida</span>
+                            <span *ngIf="pedidoForm.get('ciudad')?.errors?.['excessiveWhitespace']">Demasiados espacios en blanco</span>
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -47,7 +63,11 @@
                                 <i class="fas fa-flag"></i>
                                 Provincia   
                             </label>
-                            <input type="text" [(ngModel)]="pedido.provincia" name="provincia" placeholder="Introduzca su provincia" required>
+                            <input type="text" formControlName="provincia" placeholder="Introduzca su provincia">
+                            <div class="error-message" *ngIf="pedidoForm.get('provincia')?.touched && pedidoForm.get('provincia')?.errors">
+                                <span *ngIf="pedidoForm.get('provincia')?.errors?.['required']">La provincia es requerida</span>
+                                <span *ngIf="pedidoForm.get('provincia')?.errors?.['excessiveWhitespace']">Demasiados espacios en blanco</span>
+                            </div>
                         </div>
 
                         <div class="input-group">
@@ -55,13 +75,17 @@
                                 <i class="fas fa-mail-bulk"></i>
                                 Codigo Postal
                             </label>
-                            <input type="text" [(ngModel)]="pedido.codigoPostal" name="codigoPostal" placeholder="Introduzca su codigo postal" required>
+                            <input type="text" formControlName="codigoPostal" placeholder="Introduzca su codigo postal">
+                            <div class="error-message" *ngIf="pedidoForm.get('codigoPostal')?.touched && pedidoForm.get('codigoPostal')?.errors">
+                                <span *ngIf="pedidoForm.get('codigoPostal')?.errors?.['required']">El código postal es requerido</span>
+                                <span *ngIf="pedidoForm.get('codigoPostal')?.errors?.['pattern']">El código postal debe tener 5 dígitos</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="payment-section">
-                    <h2><i class="fas fa-credit-card"></i>M&eacute;todo de Pago</h2>
+                    <h2><i class="fas fa-credit-card"></i>Método de Pago</h2>
                     
                     <div class="cards-accepted">
                         <span>Tarjetas Aceptadas</span>
@@ -78,7 +102,11 @@
                             <i class="fas fa-user"></i>
                             Titular de la Tarjeta
                         </label>
-                        <input type="text" [(ngModel)]="pedido.titularTarjeta" name="titularTarjeta" placeholder="Introduzca el titular de la tarjeta" required>
+                        <input type="text" formControlName="titularTarjeta" placeholder="Introduzca el titular de la tarjeta">
+                        <div class="error-message" *ngIf="pedidoForm.get('titularTarjeta')?.touched && pedidoForm.get('titularTarjeta')?.errors">
+                            <span *ngIf="pedidoForm.get('titularTarjeta')?.errors?.['required']">El titular es requerido</span>
+                            <span *ngIf="pedidoForm.get('titularTarjeta')?.errors?.['excessiveWhitespace']">Demasiados espacios en blanco</span>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -86,7 +114,11 @@
                             <i class="fas fa-credit-card"></i>
                             Numero de Tarjeta
                         </label>
-                        <input type="text" [(ngModel)]="pedido.numeroTarjeta" name="numeroTarjeta" placeholder="1234 5678 9012 3456" required>
+                        <input type="text" formControlName="numeroTarjeta" placeholder="1234 5678 9012 3456">
+                        <div class="error-message" *ngIf="pedidoForm.get('numeroTarjeta')?.touched && pedidoForm.get('numeroTarjeta')?.errors">
+                            <span *ngIf="pedidoForm.get('numeroTarjeta')?.errors?.['required']">El número de tarjeta es requerido</span>
+                            <span *ngIf="pedidoForm.get('numeroTarjeta')?.errors?.['invalidCreditCard']">Número de tarjeta inválido</span>
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -96,7 +128,13 @@
                                 Fecha de Expiracion
                             </label>
                             <div class="expiry-inputs">
-                                <input type="text" [(ngModel)]="pedido.fechaVencimiento" name="fechaVencimiento" placeholder="MM/YY" required>
+                                <input type="text" formControlName="fechaVencimiento" placeholder="MM/YY">
+                            </div>
+                            <div class="error-message" *ngIf="pedidoForm.get('fechaVencimiento')?.touched && pedidoForm.get('fechaVencimiento')?.errors">
+                                <span *ngIf="pedidoForm.get('fechaVencimiento')?.errors?.['required']">La fecha es requerida</span>
+                                <span *ngIf="pedidoForm.get('fechaVencimiento')?.errors?.['invalidFormat']">Formato inválido (MM/YY)</span>
+                                <span *ngIf="pedidoForm.get('fechaVencimiento')?.errors?.['expired']">La tarjeta está vencida</span>
+                                <span *ngIf="pedidoForm.get('fechaVencimiento')?.errors?.['invalidMonth']">Mes inválido</span>
                             </div>
                         </div>
 
@@ -105,7 +143,11 @@
                                 <i class="fas fa-lock"></i>
                                 CVV
                             </label>
-                            <input type="text" [(ngModel)]="pedido.cvv" name="cvv" placeholder="123" required>
+                            <input type="text" formControlName="cvv" placeholder="123">
+                            <div class="error-message" *ngIf="pedidoForm.get('cvv')?.touched && pedidoForm.get('cvv')?.errors">
+                                <span *ngIf="pedidoForm.get('cvv')?.errors?.['required']">El CVV es requerido</span>
+                                <span *ngIf="pedidoForm.get('cvv')?.errors?.['invalidCVV']">CVV inválido</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -133,7 +175,7 @@
                 </div>
             </div>
 
-            <button type="submit" [disabled]="!pedidoForm.valid" class="pay-button">
+            <button type="submit" [disabled]="pedidoForm.invalid" class="pay-button">
                 <i class="fas fa-lock"></i> Finalizar Pedido
             </button>
         </form>

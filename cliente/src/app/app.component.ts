@@ -23,6 +23,8 @@ export class AppComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   totalItems: number = 0;
   isLoading = false;
+  showAdminDialog = false;
+  adminPassword = '';
   private cartSubscription: Subscription;
 
   constructor(
@@ -115,5 +117,26 @@ export class AppComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       this.onSearch();
     }
+  }
+
+  openAdminDialog() {
+    this.showAdminDialog = true;
+  }
+
+  // Método para verificar la contraseña y acceder a la administración
+  checkAdminPassword() {
+    const correctPassword = 'carlos'; // Contraseña establecida aquí
+    if (this.adminPassword === correctPassword) {
+      window.location.href = 'http://localhost/Angular/tiendaAngular/server/admin/';
+    } else {
+      alert('Contraseña incorrecta');
+    }
+    this.adminPassword = ''; 
+    this.showAdminDialog = false;
+  }
+
+  closeAdminDialog() {
+    this.showAdminDialog = false;
+    this.adminPassword = '';
   }
 }

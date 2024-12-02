@@ -56,6 +56,7 @@
 }
 
 .input-group {
+    position: relative;
     margin-bottom: 1.5rem;
 }
 
@@ -82,6 +83,25 @@
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(0, 243, 255, 0.2);
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    position: absolute;
+    bottom: -1.25rem;
+    left: 0;
+}
+
+input.ng-touched.ng-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+input.ng-touched.ng-valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
 
 .form-row {
@@ -200,6 +220,11 @@
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
+}
+
+.pay-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
 }
 
 .pay-button:hover {

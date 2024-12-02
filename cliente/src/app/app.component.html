@@ -114,7 +114,7 @@
                 <ul>
                     <li><a href="#"><i class="fas fa-angle-right"></i> Sobre Nosotros</a></li>
                     <li><a href="#"><i class="fas fa-angle-right"></i> Nuestro Equipo</a></li>
-                    <li><a href="http://localhost/Angular/tiendaAngular/server/admin/"><i class="fas fa-angle-right"></i>Acceso Administración</a></li>
+                    <li><a href="#" (click)="openAdminDialog(); $event.preventDefault()"><i class="fas fa-angle-right"></i>Acceso Administración</a></li>
                     <li><a href="#"><i class="fas fa-angle-right"></i> Contacto</a></li>
                 </ul>
             </div>
@@ -154,6 +154,20 @@
         </div>
     </div>
 </footer>
+
+<!-- Modal de contraseña para administración -->
+<div class="admin-modal" *ngIf="showAdminDialog">
+  <div class="admin-modal-content">
+    <h2>Acceso Administración</h2>
+    <p>Por favor, introduce la contraseña de administrador:</p>
+    <input type="password" [(ngModel)]="adminPassword" placeholder="Contraseña" (keyup.enter)="checkAdminPassword()">
+    <div class="admin-modal-buttons">
+      <button (click)="checkAdminPassword()">Acceder</button>
+      <button (click)="closeAdminDialog()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
